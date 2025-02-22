@@ -1,295 +1,504 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-darkreader-suppress>
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark">
+  <title>Xavier Pricing</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-   <title>Xavier Pricing</title>
-   <style>
-    html {
-  box-sizing: border-box;
-  height: 100%;
-}
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000000, #001f3f);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 2rem auto;
+      text-align: center;
+    }
 
-body {
-  background-color: #211f23;
-  background-repeat: no-repeat;
+    .header-title {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
 
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHJhZGlhbEdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjAlIiByPSI3MCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM1MzQ1NWIiLz48c3RvcCBvZmZzZXQ9IjcwJSIgc3RvcC1jb2xvcj0iIzIwMWUyMiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
-  background-size: 100%;
-  background-image: -moz-radial-gradient(top, circle, #53455b 0%, #201e22 70%);
-  background-image: -webkit-radial-gradient(top, circle, #53455b 0%, #201e22 70%);
-  background-image: radial-gradient(circle at top, #53455b 0%, #201e22 70%);
-  color: #fff;
-  font-family: 'Lato', sans-serif;
-  font-size: 100%;
-  min-height: 100%;
-  line-height: 1.5;
-  padding: 2.5em 0;
-}
+    .header-subtitle {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 2rem;
+    }
 
-.container {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1500px;
-}
+    .billing-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
 
-.group:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
 
-.grid-1-5 {
-  border: 2px solid #5d4e65;
-  min-height: 600px;
-  padding: 1.25em;
-  position: relative;
-  text-align: center;
-  transition: all .2s ease-in-out;
-}
-@media screen and (min-width: 700px) {
-  .grid-1-5 {
-    float: left;
-    width: 50%;
-  }
-  .grid-1-5:nth-child(odd) {
-    clear: left;
-  }
-}
-@media screen and (min-width: 800px) {
-  .grid-1-5 {
-    width: 33.3333333%;
-  }
-  .grid-1-5:nth-child(3n+1) {
-    clear: left;
-  }
-  .grid-1-5:nth-child(odd) {
-    clear: none;
-  }
-}
-@media screen and (min-width: 1120px) {
-  .grid-1-5 {
-    width: 20%;
-  }
-  .grid-1-5:nth-child(odd), .grid-1-5:nth-child(3n+1) {
-    clear: none;
-  }
-}
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
 
-.grid-1-5:hover {
-  background-color: #53455b;
-  *zoom: 1;
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF53455B', endColorstr='#FF201D22');
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzUzNDU1YiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzIwMWQyMiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
-  background-size: 100%;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #53455b), color-stop(100%, #201d22));
-  background-image: -moz-linear-gradient(top, #53455b 0%, #201d22 100%);
-  background-image: -webkit-linear-gradient(top, #53455b 0%, #201d22 100%);
-  background-image: linear-gradient(to bottom, #53455b 0%, #201d22 100%);
-  border-top: 2px solid #ec7a37;
-  border-bottom: 2px solid #ff4f69;
-  box-shadow: 0px 0px 10px 0px #323232;
-  transform: scale(1.025);
-  z-index: 2;
-}
-.grid-1-5:hover:before, .grid-1-5:hover:after {
-  content: "";
-  position: absolute;
-  background-color: #f67d35;
-  
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y2N2QzNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmNGY2OCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
-  background-size: 100%;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f67d35), color-stop(100%, #ff4f68));
-  background-image: -moz-linear-gradient(top, #f67d35 0%, #ff4f68 100%);
-  background-image: -webkit-linear-gradient(top, #f67d35 0%, #ff4f68 100%);
-  background-image: linear-gradient(to bottom, #f67d35 0%, #ff4f68 100%);
-  top: -2px;
-  bottom: -2px;
-  width: 2px;
-}
-.grid-1-5:hover:before {
-  left: -2px;
-}
-.grid-1-5:hover:after {
-  right: -2px;
-}
-.grid-1-5:hover .button {
-  background-color: #ee7a36;
-  *zoom: 1;
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=1, startColorstr='#FFEE7A36', endColorstr='#FFEB495D');
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VlN2EzNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ViNDk1ZCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
-  background-size: 100%;
-  background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ee7a36), color-stop(100%, #eb495d));
-  background-image: -moz-linear-gradient(left, #ee7a36 0%, #eb495d 100%);
-  background-image: -webkit-linear-gradient(left, #ee7a36 0%, #eb495d 100%);
-  background-image: linear-gradient(to right, #ee7a36 0%, #eb495d 100%);
-}
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 24px;
+    }
 
-h2, h3, p, ul {
-  margin: 0;
-}
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
 
-h2 {
-  font-size: 1em;
-  font-weight: 400;
-  margin: 0 0 0.5em;
-}
+    input:checked+.slider {
+      background-color: #4CAF50;
+    }
 
-h3 {
-  font-size: 1.5em;
-  letter-spacing: 0.0625em;
-  margin: 0 0 0.3333333333333333em;
-}
+    input:checked+.slider:before {
+      transform: translateX(24px);
+    }
 
-p {
-  font-size: 0.875em;
-}
+    .pricing-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
 
-p, ul {
-  margin: 0 0 1.5em;
-}
+    .plan-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      width: 300px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      transition: transform 0.3s;
+    }
 
-ul {
-  color: #796583;
-  font-size: 0.90em;
-  list-style-type: none;
-  padding: 0;
-}
-ul li {
-  margin: 0 0 1.8333333333333333em;
-}
+    .plan-card:hover {
+      transform: translateY(-5px);
+    }
 
-.button {
-  background-color: #9c83aa;
-  border-radius: 20px;
-  color: #fff;
-  font-size: 1em;
-  font-weight: 700;
-  padding: 0.75em 1.5em;
-  position: absolute;
-  bottom: 1.25em;
-  left: 50%;
-  margin-left: -60px;
-  text-decoration: none;
-  width: 120px;
-}
+    .plan-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.25rem;
+    }
 
-.uppercase, .button, h2 {
-  text-transform: uppercase;
-}
+    .plan-price {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
 
-sup, .small {
-  font-size: 0.6125em;
-}
+    .plan-price small {
+      font-size: 0.8rem;
+      color: #ffce00;
+      margin-left: 0.3rem;
+    }
 
-.ticket-button-container {
-  text-align: center;
-  margin-top: 20px;
-}
+    ul.features {
+      list-style: none;
+      text-align: left;
+      width: 100%;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
 
-.ticket-button {
-  display: inline-block;
-  padding: 15px 30px;
-  font-size: 20px;
-  color: white;
-  background-color: #9c83aa; /* Button background color */
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
+    ul.features li {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.4rem 0;
+    }
 
-.ticket-button:hover {
-  background-color: #f67d35; /* Darker background color on hover */
-}
+    ul.features li:last-child {
+      border-bottom: none;
+    }
 
-.ticket-button:active {
-  background-color: #3c35a0; /* Even darker on click */
-}
-   </style>
+    .badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ffce00;
+      color: #000;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .current-badge {
+      color: #0affde;
+      font-size: 0.9rem;
+    }
+
+    .price-yearly {
+      display: none;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5px;
+      width: 18px;
+      height: 18px;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      color: #ccc;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      text-align: left;
+      padding: 8px;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 9999;
+      left: 110%;
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      transition: opacity 0.3s;
+      font-size: 0.9rem;
+    }
+
+    .tooltip .tooltip-text::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent rgba(0, 0, 0, 0.8) transparent transparent;
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .faq-section {
+      margin: 3rem auto 4rem auto;
+      max-width: 900px;
+      text-align: left;
+    }
+
+    .faq-section h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .faq-item {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .faq-item h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #ccc;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      margin: 10% auto;
+      padding: 1.5rem;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .price-chart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .price-chart-table th,
+    .price-chart-table td {
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      text-align: center;
+      color: #fff;
+    }
+
+    .price-chart-table thead {
+      background-color: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+
+    .modal-footer {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #ccc;
+    }
+
+    .transparent-button {
+      background-color: transparent;
+      border: 2px solid #fff;
+      border-radius: 6px;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .transparent-button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    @media (max-width:768px) {
+      .plan-card {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .modal-content {
+        margin: 30% auto;
+        width: 90%;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <h1><center>Xavier Plans</center></h1>
-  <div class="container group">
-    <div class="grid-1-5">
-      <h2>Basic</h2>
-      <h3><span class="uppercase">Free</span></h3>
-      <p>Currently Used By You</p>
-      <ul>
-        <li>Basic Chat Model</li>
-        <li>Limited Chat Limit Of Pro Model</li>
-        <li>8 Media Upload/Day</li>
-        <li>5 Image Gen/Day</li>
-      </ul>
+  <div class="container">
+    <h1 class="header-title">Choose Your Xavier Plan</h1>
+    <p class="header-subtitle">Unlock the full potential of Xavier AI with our flexible pricing options. Choose the plan
+      that best suits your needs.</p>
+    <div class="billing-toggle">
+      <span>Monthly</span>
+      <label class="switch">
+        <input type="checkbox" id="billingSwitch">
+        <span class="slider"></span>
+      </label>
+      <span>Yearly</span>
     </div>
-    <div class="grid-1-5">
-      <h2>XAVIER PRO</h2>
-      <h3><sup>$</sup>2.99<span class="small">/mo</span></h3>
-      <p>Cheapest Plan</p>
-      <ul>
-        <li>Xavier Pro Chat Model</li>
-        <li>Unlimited Chat Limit</li>
-        <li>300 Media Upload/Month</li>
-        <li>Unlimited Internet Search</li>
-        <li>Premium Role In Our Discord Server</li>
-        <li>25 Image Gen/Day</li>
-      </ul>
+    <div class="pricing-row">
+      <div class="plan-card">
+        <h3 class="plan-title">Basic</h3>
+        <div class="plan-price">
+          <span class="price-monthly">$0<span style="font-size:0.8rem;">/mo</span></span>
+          <span class="price-yearly">$0<span style="font-size:0.8rem;">/yr</span></span>
+        </div>
+        <div class="current-badge">Currently Used By You</div>
+        <ul class="features">
+          <li>Basic Chat Model</li>
+          <li>Limited access of Pro Model <span class="tooltip">?<span class="tooltip-text">Enables after
+                Voting</span></span></li>
+          <li>4 attachments Upload/Day <span class="tooltip">?<span class="tooltip-text">Enables after
+                Voting</span></span></li>
+          <li>5 Image Gen/Day <span class="tooltip">?<span class="tooltip-text">2 Free + 3 after voting</span></span>
+          </li>
+        </ul>
+      </div>
+      <div class="plan-card">
+        <span class="badge">Most Popular</span>
+        <h3 class="plan-title">Xavier Pro</h3>
+        <div class="plan-price">
+          <span class="price-monthly">$2.99<span style="font-size:0.8rem;">/mo</span></span>
+          <span class="price-yearly">$29.99<span style="font-size:0.8rem;">/yr</span> <small>Save $6</small></span>
+        </div>
+        <ul class="features">
+          <li>Xavier Pro Chat Model</li>
+          <li>Unlimited Chat Limit</li>
+          <li>Unlimited Internet Search <span class="tooltip">?<span class="tooltip-text">Advanced Internet
+                Search</span></span></li>
+          <li>300 attachments Upload/Month</li>
+          <li>Premium Role In Our Discord Server</li>
+          <li>25 Image Gen/Day</li>
+        </ul>
+      </div>
+      <div class="plan-card">
+        <h3 class="plan-title">Xavier Prime</h3>
+        <div class="plan-price">
+          <span class="price-monthly">$9.99<span style="font-size:0.8rem;">/mo</span></span>
+          <span class="price-yearly">$99.9<span style="font-size:0.8rem;">/yr</span> <small>Save $20</small></span>
+        </div>
+        <ul class="features">
+          <li>Xavier Prime Chat Model</li>
+          <li>Unlimited Chat Limit</li>
+          <li>Unlimited Internet Search <span class="tooltip">?<span class="tooltip-text">Advanced Internet
+                Search</span></span></li>
+          <li>Unlimited attachments Upload</li>
+          <li>Unlimited Image Generation</li>
+          <li>Access To Better Image Generation Model</li>
+          <li>Premium + VIP Role In Our Discord Server</li>
+          <li>Pre Release Access Of Beta Features</li>
+        </ul>
+      </div>
     </div>
-    <div class="grid-1-5">
-      <h2>XAVIER PRO YEARLY</h2>
-      <h3><sup>$</sup>29.99<span class="small">/Yr</span></h3>
-      <p>Save 6$</p>
-      <ul>
-        <li>Xavier Pro Chat Model</li>
-        <li>Unlimited Chat Limit</li>
-        <li>300 Media Upload/Month</li>
-        <li>Unlimited Internet Search</li>
-        <li>Premium Role In Our Discord Server</li>
-        <li>25 Image Gen/Day</li>
-      </ul>
-    </div>
-    <div class="grid-1-5">
-      <h2>XAVIER PRIME</h2>
-      <h3><sup>$</sup>9.99<span class="small">/mo</span></h3>
-      <p>Most Recommended</p>
-      <ul>
-        <li>Unlimited Chat Limit</li>
-        <li>Xavier Prime Chat Model</li>
-        <li>Unlimited Media Upload</li>
-        <li>Unlimited Internet Search</li>
-        <li>Unlimited Image Generation</li>
-        <li>Access To Better Image Generation Model</li> 
-        <li>Premium + VIP Role In Our Discord Server</li>
-        <li>Pre Release Access Of Beta Features</li>
-      </ul>
-    </div>
-    <div class="grid-1-5">
-      <h2>XAVIER PRIME YEARLY</h2>
-      <h3><sup>$</sup>99.9<span class="small">/Yr</span></h3>
-      <p>Save 20$</p>
-      <ul>
-        <li>Unlimited Chat Limit</li>
-        <li>Xavier Prime Chat Model</li>
-        <li>Unlimited Media Upload</li>
-        <li>Unlimited Internet Search</li>
-        <li>Unlimited Image Generation</li>
-        <li>Access To Better Image Generation Model</li>
-        <li>Premium + VIP Role In Our Discord Server</li>
-        <li>Pre Release Access Of Beta Features</li>
-      </ul>
+    <h2 style="margin-bottom:1.5rem;">Server Plan</h2>
+    <div class="pricing-row">
+      <div class="plan-card">
+        <h3 class="plan-title">Server Plan</h3>
+        <button id="priceChartButton" class="transparent-button" style="margin-top:1rem;">Price Chart</button>
+        <ul class="features">
+          <li>Better chat model</li>
+          <li>Unlimited Internet Search <span class="tooltip">?<span class="tooltip-text">Basic Internet
+                Search</span></span></li>
+          <li>8 attachments Upload/day per user</li>
+          <li>10 image gen per day per user</li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="ticket-button-container">
-    <a href="https://discord.gg/Vt3BqyrvsW" target="_blank" class="ticket-button">Make Ticket In Our Discord Server To Buy Any Plan</a>
+  <div id="priceChartModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Server Plan Pricing</h2>
+      <table class="price-chart-table">
+        <thead>
+          <tr>
+            <th>Members</th>
+            <th>Price (Monthly)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>100 members</td>
+            <td>$12</td>
+          </tr>
+          <tr>
+            <td>200 members</td>
+            <td>$15</td>
+          </tr>
+          <tr>
+            <td>400 members</td>
+            <td>$20</td>
+          </tr>
+          <tr>
+            <td>1000 members</td>
+            <td>$25</td>
+          </tr>
+          <tr>
+            <td>2000 members</td>
+            <td>$30</td>
+          </tr>
+          <tr>
+            <td>5000 members</td>
+            <td>$35</td>
+          </tr>
+          <tr>
+            <td>10k+ members</td>
+            <td>$40</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="modal-footer">If you want more details create a ticket in our server.</div>
+    </div>
   </div>
-  <footer>
-    <p style="font-size: small; text-align: right;"><i>This Is Temporary Showcase Page, This Website Is Under Development</i></p>
-  </footer>
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>I have more than 1,000 members in my Discord server, but most of them are inactive. Do I need to purchase a
+        plan for all members?</h3>
+      <p>No, you don’t have to purchase a server plan for all your members. You can choose a plan for 200 or 400 members
+        instead.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What happens when I reach my daily limits?</h3>
+      <p>Once you reach your daily limits, you'll need to wait until the next day for them to reset, or you can upgrade
+        to a higher tier plan for increased or unlimited usage.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What if I have a Per User plan active and also purchase a Server plan?</h3>
+      <p>The Per User plan will remain active for you, while the Server plan will be active for your server.</p>
+    </div>
+  </section>
+  <script>
+    function togglePricing(isYearly) {const monthlyPrices = document.querySelectorAll('.price-monthly'); const yearlyPrices = document.querySelectorAll('.price-yearly'); if (isYearly) {monthlyPrices.forEach(el => el.style.display = 'none'); yearlyPrices.forEach(el => el.style.display = 'inline');} else {monthlyPrices.forEach(el => el.style.display = 'inline'); yearlyPrices.forEach(el => el.style.display = 'none');} }
+    togglePricing(false);
+    const billingSwitch = document.getElementById('billingSwitch');
+    billingSwitch.addEventListener('change', function () {togglePricing(this.checked);});
+    const priceChartButton = document.getElementById('priceChartButton');
+    const priceChartModal = document.getElementById('priceChartModal');
+    const closeModal = document.getElementById('closeModal');
+    priceChartButton.addEventListener('click', () => {priceChartModal.style.display = 'block';});
+    closeModal.addEventListener('click', () => {priceChartModal.style.display = 'none';});
+    window.addEventListener('click', (e) => {if (e.target === priceChartModal) {priceChartModal.style.display = 'none';} });
+  </script>
 </body>
 
 </html>
